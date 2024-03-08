@@ -4,6 +4,12 @@ const express = require("express");
 //import the mongoclient
 const { MongoClient } = require("mongodb");
 
+//import the cors
+const cors = require("cors");
+
+//use the cors to enable cors policy
+app.use(cors());
+
 // Import the dotenv package
 require('dotenv').config();
 
