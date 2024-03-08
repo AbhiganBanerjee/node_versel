@@ -7,9 +7,6 @@ const { MongoClient } = require("mongodb");
 //import the cors
 const cors = require("cors");
 
-//use the cors to enable cors policy
-app.use(cors());
-
 // Import the dotenv package
 require('dotenv').config();
 
@@ -18,6 +15,9 @@ const app = express();
 
 //Middleware to parse JSON data in the request body
 app.use(express.json());
+
+//use the cors to enable cors policy
+app.use(cors());
 
 //Get the PORT and MONGO_URI from .env file
 let port = process.env.PORT;
