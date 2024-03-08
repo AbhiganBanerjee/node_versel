@@ -40,6 +40,40 @@ app.get("/",async (req,res)=>{
     }
 });
 
+//Create a POST mode insert request or REST Service, in the anime databse
+app.post("/insert",async (req,res)=>{
+    //connect with mongodb by mongoclient constructor
+    const clientObj = new MongoClient(mongoUri);
+
+    try{
+        //Get the database reference
+        let db = clientObj.db("node_versel");
+
+        //Perform the inserOne operation in the database collection
+        const result = await db.collection("animes").insertOne({
+            "id": req.body.id,
+            "title": req.body.title,
+            "protagonist": req.body.protagonist,
+            "price": req.body.price,
+            "author": req.body.author,
+            "image": req.body.image
+        });
+
+        //validate this result
+        if(result.insertedId){
+            res.status(500).json(result);
+        }else{
+            res.status(404).json({"msg":"Insertion Failed...."});
+        }
+    }catch(err){
+        res.status(500).json({"msg":"Error in connection!!!"});
+    }
+    finally{
+        clientObj.close();
+    }
+})
+
+
 //Make the server starting and listening
 app.listen(port,()=>{
     console.log(`Server started at Some port number of ${port}`);
