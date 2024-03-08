@@ -10,6 +10,9 @@ require('dotenv').config();
 //Create a REST Object using express()
 const app = express();
 
+//Middleware to parse JSON data in the request body
+app.use(express.json());
+
 //Get the PORT and MONGO_URI from .env file
 let port = process.env.PORT;
 let mongoUri = process.env.MONGO_URI;
@@ -66,6 +69,7 @@ app.post("/insert",async (req,res)=>{
             res.status(404).json({"msg":"Insertion Failed...."});
         }
     }catch(err){
+        console.log(err);
         res.status(500).json({"msg":"Error in connection!!!"});
     }
     finally{
@@ -76,5 +80,5 @@ app.post("/insert",async (req,res)=>{
 
 //Make the server starting and listening
 app.listen(port,()=>{
-    console.log(`Server started at Some port number of ${port}`);
+    console.log(`Server started at Some given port number of - ${port}`);
 });
